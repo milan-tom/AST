@@ -19,12 +19,12 @@ registering new dialects.
 ## Docker Image
 We recommend pulling the docker image to use MLIR-Smith:
 ```sh
-sudo docker pull berkeates/mlir-smith:latest
+sudo docker pull milantom/mlir-smith:latest
 ```
 
 And run it:
 ```sh
-sudo docker run -it --rm berkeates/mlir-smith
+sudo docker run -it --rm milantom/mlir-smith
 ```
 
 ## Getting Started
