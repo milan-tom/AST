@@ -2,7 +2,7 @@
 ### GENERAL SETUP
 ################################################################################
 
-FROM ubuntu:22.04 as llvm
+FROM --platform=linux/amd64 ubuntu:22.04 AS llvm
 
 # User directory
 ENV USER=user
@@ -10,16 +10,16 @@ ENV HOME=/home/user
 WORKDIR $HOME
 
 # Install dependencies
-RUN apt-get update -y && \ 
+RUN apt-get update -y && \
   apt-get install -y --no-install-recommends \
-  wget=1.21.2-2ubuntu1 \
-  ca-certificates=20230311ubuntu0.22.04.1 \
-  git=1:2.34.1-1ubuntu1.9 \
-  cmake=3.22.1-1ubuntu1.22.04.1 \
-  ninja-build=1.10.1-1 \
-  python3=3.10.6-1~22.04 \
-  clang=1:14.0-55~exp2 \
-  lld=1:14.0-55~exp2 && \
+  wget \
+  ca-certificates \
+  git \
+  cmake \
+  ninja-build \
+  python3 \
+  clang \
+  lld && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
@@ -107,7 +107,7 @@ WORKDIR $HOME
 ################################################################################
 
 # Copy binaries
-FROM ubuntu:22.04
+FROM --platform=linux/amd64 ubuntu:22.04
 
 # User directory
 ENV USER=user
@@ -121,23 +121,23 @@ RUN mv /root/.bashrc . && mv /root/.profile .
 ENV TERM=xterm-color
 
 # Install dependencies
-RUN apt-get update -y && \ 
+RUN apt-get update -y && \
   apt-get install -y --no-install-recommends \
-  wget=1.21.2-2ubuntu1  \
-  nano=6.2-1 \
-  less=590-1ubuntu0.22.04.1 \
-  git=1:2.34.1-1ubuntu1.9 \
-  cmake=3.22.1-1ubuntu1.22.04.1 \
-  make=4.3-4.1build1 \
-  ninja-build=1.10.1-1 \
-  libomp-11-dev=1:11.1.0-6 \
-  clang-11=1:11.1.0-6 \
-  gcc=4:11.2.0-1ubuntu1 \
-  lld=1:14.0-55~exp2  \
-  python3-pip=22.0.2+dfsg-1 \
-  python3=3.10.6-1~22.04 \
-  python3-dev=3.10.6-1~22.04 \
-  gpg=2.2.27-3ubuntu2.1 && \
+  wget \
+  nano \
+  less \
+  git \
+  cmake \
+  make \
+  ninja-build \
+  libomp-11-dev \
+  clang-11 \
+  gcc \
+  lld \
+  python3-pip \
+  python3 \
+  python3-dev \
+  gpg && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
@@ -168,7 +168,7 @@ WORKDIR $HOME/dace
 RUN git checkout 4fcb0b5ee90384829ab7a76bde0a07a7a8cbcb4b
 RUN git submodule update --init --recursive --depth 1 && \
   pip install --no-cache-dir --editable . && \
-  pip install --no-cache-dir mxnet-mkl==1.6.0 numpy==1.23.1
+  pip install --no-cache-dir mxnet==1.9.1 numpy==1.23.1
 
 # Go home
 WORKDIR $HOME
